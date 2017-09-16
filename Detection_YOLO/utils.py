@@ -75,13 +75,13 @@ def interpret_netout(image, netout):
     for c in range(CLASS):
         sorted_indices = list(reversed(np.argsort([box.probs[c] for box in boxes])))
 
-        for i in xrange(len(sorted_indices)):
+        for i in range(len(sorted_indices)):
             index_i = sorted_indices[i]
             
             if boxes[index_i].probs[c] == 0: 
                 continue
             else:
-                for j in xrange(i+1, len(sorted_indices)):
+                for j in range(i+1, len(sorted_indices)):
                     index_j = sorted_indices[j]
                     
                     if boxes[index_i].iou(boxes[index_j]) >= 0.4:

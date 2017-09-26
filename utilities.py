@@ -23,7 +23,7 @@ def timefunc(f):
         return result
     return f_timer
 
-def download_video(url,folder_path=TEST_VIDEOS):
+def download_video(url,path):
     """ Use youtube_dl to download the video from youtube in mp4 format and return the filepath.
     Like: youtube-dl -f 22 https://www.youtube.com/watch?v=0jnojoBWOdo --output='test.mp4'
 
@@ -33,12 +33,10 @@ def download_video(url,folder_path=TEST_VIDEOS):
                 A video file with naming video_[random number] would be created at that location.
                 
     """
-    video_path = folder_path + 'video_' + str(random.randint(1, 10000))+'.mp4'
-    ydl_opts = {'outtmpl': video_path, 'format': '22'}
+    ydl_opts = {'outtmpl': path, 'format': '22'}
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
         ydl.download([url])
-    print('Video downloaded to ' + video_path)
-    return video_path
+    print('Video downloaded to ' + path)
 
 def split_video(input_path, output_path, from_time, duration):
     """ from_time in minutes:seconds, example 01:10 for one minute ten seconds
@@ -51,31 +49,25 @@ def split_video(input_path, output_path, from_time, duration):
     ff.run()
     print('Splitted video starting from {}, duration: {} seconds'.format(from_time, duration))
   
-def get_frames(video_path, from_time, duration):
+def get_frames(input_video_path, output_frames_path, temp_dir, from_time, duration):
     """ Breakes video at the location video_path into frames and returns the directory path of pngs
     The directory would be video file name without extension. Fails if there exists such directory with content.
     Like: ffmpeg -i adobe.webm -vcodec png adobe/%04d.png
     """
-    png_folder = video_path[:video_path.index('.')]    
-    if os.path.exists(png_folder):
-        os.removedirs(png_folder)
-    os.mkdir(png_folder)
-
-    split_video_path = '/tmp/temp{}.mp4'.format(str(random.randint(1, 100)))
-    split_video(video_path, split_video_path, from_time, duration)
+    split_video_path = temp_dir + '/temp.mp4'
+    
+    split_video(input_video_path, split_video_path, from_time, duration)
     
     output_params = '-vcodec png'
     #output_params = '-vcodec png -r {}'.format(fps)
     
     ff = ffmpy.FFmpeg(
     inputs={split_video_path: None},
-    outputs={png_folder + '/%04d.png': output_params})
+    outputs={output_frames_path + '/%04d.png': output_params})
     ff.run()
-    print('Frames created at {}'.format(png_folder))
-    return png_folder
+    print('Frames created at {}'.format(output_frames_path))
 
 def build_video(input_files, output_file):
-    output_file = output_file
     ff = ffmpy.FFmpeg(
         inputs={input_files: None},
         outputs={output_file: '-pix_fmt yuv420p'})

@@ -10,22 +10,14 @@ import utilities
 import detection
 import recognition
 import importlib
+from tempfile import TemporaryDirectory
 #importlib.reload(utilities)
 #importlib.reload(detection)
 #sys.path.append("crnn.pytorch")
 
-OUT_DIR='/home/sravya/data/muse/out/'
+def infer(input_frames_path, out_frames_path, every_nth=1):
+    frame_files = sorted(glob.glob(input_frames_path + '/*'))
 
-def prep_frames(video_url=None, video_path=None, from_time='00:10', duration=10):
-    if(video_path is None and video_url is None):
-        print("Please provide either video_path or video_url")
-    if(video_path is None):
-        video_path = utilities.download_video(video_url)
-
-    frames_path = utilities.get_frames(video_path, from_time, duration)
-    return frames_path
-
-def infer(frame_files, every_nth=1):
     num_frames = len(frame_files)
     detect_time = 0
     recognize_time = 0
@@ -35,7 +27,7 @@ def infer(frame_files, every_nth=1):
     text = None
         
     for index, filename in tqdm(enumerate(frame_files), total=num_frames):
-        out_name = OUT_DIR + 'out_{0:04d}.png'.format(index)
+        out_name = out_frames_path + '/out_{0:04d}.png'.format(index)
         if(index%every_nth == 0):
             wordBB, score = detection.detect(filename)
 
@@ -46,15 +38,26 @@ def infer(frame_files, every_nth=1):
                 text = recognition.recognize(filename, wordBB)
                         
         utilities.save(filename, wordBB, text, out_name)   
-    return OUT_DIR
 
-def infer_video_save(url, path):
-    print('In video save', file=sys.stderr)
-    frames_path = prep_frames(url,from_time="01:25", duration=5)
-    frame_files = sorted(glob.glob(frames_path + '/*'))
+                
+#TODO: Take start time and duration as inputs
+def infer_video_save(url, path, from_time="01:25", duration=5):
+    with TemporaryDirectory() as temp_dir:
+        #Create temp files and folders
+        input_video_path = temp_dir + '/input.mp4'
+        output_video_path = path
+        input_frames_path = temp_dir + '/in_frames'
+        output_frames_path = temp_dir + '/out_frames'
+        os.mkdir(input_frames_path)
+        os.mkdir(output_frames_path)
 
-    out_path = infer(frame_files=frame_files, every_nth=4)
+        utilities.download_video(url, input_video_path)
 
-    # Stitch the video and show
-    input_files = out_path + 'out_%04d.png'
-    video_file_path = utilities.build_video(input_files, path)
+        utilities.get_frames(input_video_path, input_frames_path, temp_dir, from_time, duration)
+        
+        out_path = infer(input_frames_path, output_frames_path, every_nth=4)
+
+        # Stitch the video and show
+        output_frames = output_frames_path + '/out_%04d.png'
+        utilities.build_video(output_frames, output_video_path)
+        return output_video_path

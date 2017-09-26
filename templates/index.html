@@ -1,0 +1,124 @@
+<!doctype! html>
+<html>
+	<head>
+		<title>Text detection and recognition on natural videos</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" type="text/css">
+		<link rel="stylesheet" href="/static/css/app.css" type="text/css">
+
+		<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://cdn.staticfile.org/tether/1.4.0/js/tether.min.js"></script>
+		<script src="https://cdn.staticfile.org/twitter-bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+		<script src="https://unpkg.com/vue"></script>
+	</head>
+	<body>
+		<div id="app">
+			<div>
+				<form id="upload-form" method="post" enctype="multipart/form-data">
+					<h5>Demo</h5>
+					<div class="form-content-container">
+						<input id="submit_url" type="url" name="url" />
+						<input id="submit_button" type="submit" value="Submit" />
+					</div>
+				</form>
+			</div>
+			<hr>
+			<div id="result">
+				<div class="item">
+					<div>Result {{ video_path }}</div>
+					<ul>
+						<li>
+                            <video width="1280" height="960" controls>
+                                <source src='{{ video_path }}' type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<hr>
+			<footer>
+				<div>This is a demo from Sravya
+				<div>Github repo for this demo: <a href="https://github.com/sravya8/..">https://github.com/sravya8/..</a></div>
+			</footer>
+			<!--a href="https://github.com/argman/EAST"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a-->
+		</div>
+
+		<script>
+			$(function() {
+                $(function() {
+  justPlay('http://clips.vorwaerts-gmbh.de/VfE_html5.mp4', 'My video');
+});
+    
+            function justPlay(link, title){
+                document.getElementById('player').setAttribute('src',video_path);
+                document.getElementById('playcontenttitle').innerHTML = title;
+            }
+				function getQueryStrings() {
+					var vars = [], hash, hashes;
+					if (window.location.href.indexOf('#') === -1) {
+						hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+					} else {
+						hashes = window.location.href.slice(window.location.href.indexOf('?') + 1, window.location.href.indexOf('#')).split('&');
+					}
+					for(var i = 0; i < hashes.length; i++) {
+						hash = hashes[i].split('=');
+						vars.push(hash[0]);
+						vars[hash[0]] = hash[1];
+					}
+					return vars;
+				}
+
+				var session_id = '{{session_id}}';
+
+				var app = new Vue({
+					el: '#app',
+					data: {
+						session_id: session_id,
+						text_lines: [],
+						rtparams: {},
+						timing: {},
+						cpuinfo: '',
+						meminfo: '',
+						loadavg: '',
+					},
+					computed: {
+						input_image_url: function() { return '/static/results/' + this.session_id + '/input.png'; },
+						result_video_url: function() { return this.path;},
+						result_json_url: function() { return '/static/results/' + this.session_id + '/result.json'; },
+					},
+				});
+
+				var render = function(session_id) {
+					app.session_id = session_id;
+					app.text_lines = ['loading'];
+					$.get('/static/results/' + session_id + '/result.json', function(data) {
+						if (typeof data == 'string') {
+							data = JSON.parse(data);
+						}
+						app.text_lines = data.text_lines;
+						app.rtparams = data.rtparams;
+						app.timing = data.timing;
+						app.cpuinfo = data.cpuinfo
+						app.meminfo = data.meminfo
+						app.loadavg = data.loadavg
+					});
+				}
+
+				if (session_id != 'dummy_session_id') {
+					window.history.pushState({},"", '/?r=' + session_id);
+					render(session_id);
+				} else {
+					var queryStrings = getQueryStrings();
+					var rid = queryStrings['r'];
+					if (rid) {
+						render(rid);
+					}
+				}
+
+			})
+
+		</script>
+
+	</body>
+</html>

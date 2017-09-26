@@ -10,7 +10,9 @@ import base64
 from IPython.display import HTML
 import time
 from PIL import Image
-
+#import matplotlib
+#matplotlib.use('Agg')
+plt.switch_backend('agg')
 
 def timefunc(f):
     def f_timer(*args, **kwargs):
@@ -83,7 +85,7 @@ def build_video(input_files, output_file):
 @timefunc
 def visualize(image_path, boxes, texts, out_path=None):
     image = Image.open(image_path)
-    plt.clf()
+    #plt.clf()
     plt.imshow(image)
 
     if boxes is not None:
@@ -100,6 +102,7 @@ def visualize(image_path, boxes, texts, out_path=None):
             plt.text(xmin, ymin, texts[index].strip(), color='b', fontsize=15)#bbox={'facecolor':'white', 'alpha':0.5, 'pad':0})
     if out_path is not None:
         plt.savefig(out_path)
+        #plt.close(fig)
     else:
         plt.show()    
 

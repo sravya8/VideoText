@@ -17,7 +17,7 @@ PATH_TO_CKPT = './detection/coco_ssd_events/frozen_inference_graph.pb'
 #PATH_TO_CKPT = "/home/sravya/git/models/object_detection/text_detection/frozen_inference_graph.pb"
 PATH_TO_LABELS = "/home/sravya/git/models/object_detection/text_detection/data/text.pbtxt"
 NUM_CLASSES = 1
-SCORE_THRESHOLD=0.8
+DEFAULT_SCORE_THRESHOLD=0.8
 
 def timefunc(f):
     def f_timer(*args, **kwargs):
@@ -56,7 +56,7 @@ def decode_box_coordinates(image, file_boxes):
     return new_boxes
 
 @timefunc
-def detect(image_path):
+def detect(image_path, score_threshold = DEFAULT_SCORE_THRESHOLD):
     with detection_graph.as_default():
         with tf.Session(graph=detection_graph) as sess:
             
@@ -77,7 +77,7 @@ def detect(image_path):
               feed_dict={image_tensor: image_np_expanded})
             #return boxes, scores, classes, num
 
-            top_box_indices = file_scores[0] > SCORE_THRESHOLD
+            top_box_indices = file_scores[0] > score_threshold
             
             file_boxes = file_boxes[0][top_box_indices]
             new_file_boxes = decode_box_coordinates(image, file_boxes)

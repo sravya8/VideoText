@@ -24,3 +24,6 @@ Web server:
 - flask_server.py - Contains basic flask app
 - templates - Contains html for flask app
 - static - Holds demo videos
+
+Pre-trained weights:
+Download from [Google drive](https://drive.google.com/drive/folders/0B2zzsNPEVylSYmUwTnYweXpkZ00?usp=sharing) and put it into a folder named weights/

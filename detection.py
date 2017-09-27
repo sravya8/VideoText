@@ -5,8 +5,7 @@ import tensorflow as tf
 from PIL import Image
 
 # Path to frozen detection graph. This is the model retrained on text data
-PATH_TO_CKPT = './detection/frozen_inference_graph.pb'
-#PATH_TO_CKPT = "/home/sravya/git/models/object_detection/text_detection/frozen_inference_graph.pb"
+PATH_TO_CKPT = './weights/frozen_inference_graph.pb'
 
 DEFAULT_SCORE_THRESHOLD=0.9
 

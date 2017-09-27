@@ -6,7 +6,7 @@ We have modified config files for two models in this directory:
 1. faster_rcnn_resnet101_pets_coco.config
 2. ssd_mobilenet_v1_coco.config
 
-Frozen model checkpoint trained on coco-text and minimally augmented with custom text images is stored as frozen_inference_graph.pb
+Frozen model checkpoint trained on coco-text and minimally augmented with custom text images is stored as frozen_inference_graph.pb (Will add google drive link)
 
 Script used to generate TF records for use with this model is at [coco-text/Coco-Text%20to%20TFRecords.ipynb](../coco-text/Coco-Text%20to%20TFRecords.ipynb)
 

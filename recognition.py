@@ -19,7 +19,7 @@ def timefunc(f):
         return result
     return f_timer
 
-model_path = 'crnn.pytorch/data/crnn.pth'
+model_path = './weights/crnn.pth'
 alphabet = '0123456789abcdefghijklmnopqrstuvwxyz'
 
 #Intial model

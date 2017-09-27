@@ -1,23 +1,14 @@
-import numpy as np
-import os
-import six.moves.urllib as urllib
-import sys
-import tarfile
-import tensorflow as tf
-import zipfile
-
-from collections import defaultdict
-from io import StringIO
-from matplotlib import pyplot as plt
-from PIL import Image
 import time
 
-# Path to frozen detection graph. This is the actual model that is used for the object detection.
-PATH_TO_CKPT = './detection/coco_ssd_events/frozen_inference_graph.pb'
+import numpy as np
+import tensorflow as tf
+from PIL import Image
+
+# Path to frozen detection graph. This is the model retrained on text data
+PATH_TO_CKPT = './detection/frozen_inference_graph.pb'
 #PATH_TO_CKPT = "/home/sravya/git/models/object_detection/text_detection/frozen_inference_graph.pb"
-PATH_TO_LABELS = "/home/sravya/git/models/object_detection/text_detection/data/text.pbtxt"
-NUM_CLASSES = 1
-DEFAULT_SCORE_THRESHOLD=0.8
+
+DEFAULT_SCORE_THRESHOLD=0.9
 
 def timefunc(f):
     def f_timer(*args, **kwargs):

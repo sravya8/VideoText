@@ -1,13 +1,14 @@
 import sys
 sys.path.append("crnn.pytorch")
+import time
+
+from PIL import Image
+
 import torch
 from torch.autograd import Variable
 import utils
 import dataset
-from PIL import Image
-
 import models.crnn as crnn
-import time
 
 def timefunc(f):
     def f_timer(*args, **kwargs):
@@ -19,7 +20,6 @@ def timefunc(f):
     return f_timer
 
 model_path = 'crnn.pytorch/data/crnn.pth'
-#img_path = '/home/sravya/data/muse/mydata/4.jpg'
 alphabet = '0123456789abcdefghijklmnopqrstuvwxyz'
 
 #Intial model
@@ -29,7 +29,6 @@ if torch.cuda.is_available():
 print('loading pretrained model from %s' % model_path)
 model.load_state_dict(torch.load(model_path))
 
-#Utilities
 #For decoding model output
 converter = utils.strLabelConverter(alphabet)
 #For preprocessing the input
@@ -39,7 +38,7 @@ def recognize_cropped(image):
     image = transformer(image.convert('L'))
     if torch.cuda.is_available():
         image = image.cuda()
-    #Reshaping by adding another axis with length 1 at the beginning?
+    #Reshaping by adding another axis with length 1 at the beginning
     # [1, 32, 100] -> [1, 1, 32, 100]
     image = image.view(1, *image.size())
     

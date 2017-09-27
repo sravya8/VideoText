@@ -1,17 +1,12 @@
-DATA_PATH='/home/sravya/data/muse/'
-TEST_VIDEOS = DATA_PATH + 'testvideos/'
+import base64
+import io
+import time
 
+from IPython.display import HTML
+from PIL import Image
 import youtube_dl, random
 import ffmpy
-import os
 import matplotlib.pyplot as plt
-import io
-import base64
-from IPython.display import HTML
-import time
-from PIL import Image
-#import matplotlib
-#matplotlib.use('Agg')
 plt.switch_backend('agg')
 
 def timefunc(f):
@@ -24,14 +19,12 @@ def timefunc(f):
     return f_timer
 
 def download_video(url,path):
-    """ Use youtube_dl to download the video from youtube in mp4 format and return the filepath.
+    """ Use youtube_dl to download the video from youtube in mp4 format
     Like: youtube-dl -f 22 https://www.youtube.com/watch?v=0jnojoBWOdo --output='test.mp4'
 
     Arguments: 
     url -- Youtube video url to be downloaded
-    folder_path -- Absolute path where the video needs to be downloaded. 
-                A video file with naming video_[random number] would be created at that location.
-                
+    path -- Absolute path where the video needs to be downloaded                
     """
     ydl_opts = {'outtmpl': path, 'format': '22'}
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
@@ -39,8 +32,13 @@ def download_video(url,path):
     print('Video downloaded to ' + path)
 
 def split_video(input_path, output_path, from_time, duration):
-    """ from_time in minutes:seconds, example 01:10 for one minute ten seconds
-        duration in seconds, for example 10"""
+    """ Split the video
+    Arguments:
+    input_path - path of input video
+    output_path - path to store output video
+    from_time - in minutes:seconds, example 01:10 for one minute ten seconds
+    duration - in seconds, for example 10
+    """
     #'-ss 00:00:15.00 -t 00:00:10.00 -c:v copy -c:a copy'
     parameters = '-ss 00:{}.00 -t 00:00:{}.00 -c:v copy -c:a copy'.format(from_time, duration)
     ff = ffmpy.FFmpeg(
@@ -49,14 +47,20 @@ def split_video(input_path, output_path, from_time, duration):
     ff.run()
     print('Splitted video starting from {}, duration: {} seconds'.format(from_time, duration))
   
-def get_frames(input_video_path, output_frames_path, temp_dir, from_time, duration):
-    """ Breakes video at the location video_path into frames and returns the directory path of pngs
-    The directory would be video file name without extension. Fails if there exists such directory with content.
+def get_frames(video_path, output_frames_path, temp_dir, from_time, duration):
+    """ Breakes video into frames
+    Arguments:
+    video_path - path for input video
+    output_frames_path - path to store output frames
+    temp_dir - directory to store intermediate files
+    from_time - in minutes:seconds, example 01:10 for one minute ten seconds
+    duration - in seconds, for example 10
+
     Like: ffmpeg -i adobe.webm -vcodec png adobe/%04d.png
     """
     split_video_path = temp_dir + '/temp.mp4'
     
-    split_video(input_video_path, split_video_path, from_time, duration)
+    split_video(video_path, split_video_path, from_time, duration)
     
     output_params = '-vcodec png'
     #output_params = '-vcodec png -r {}'.format(fps)
@@ -87,10 +91,6 @@ def visualize(image_path, boxes, texts, out_path=None):
             x = xmin, xmax, xmax, xmin, xmin
             y = ymin, ymin, ymax, ymax, ymin
             plt.plot(x, y, 'g', alpha=0.8)
-            # visualize the indiv vertices:
-            #vcol = ['r','g','b','k']
-            #for j in range(4):
-            #    plt.scatter(x[j],y[j],color=vcol[j])  
             plt.text(xmin, ymin, texts[index].strip(), color='b', fontsize=15)#bbox={'facecolor':'white', 'alpha':0.5, 'pad':0})
     if out_path is not None:
         plt.savefig(out_path)

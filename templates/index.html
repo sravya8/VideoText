@@ -1,7 +1,7 @@
 <!doctype! html>
 <html>
 	<head>
-		<title>Text detection and recognition on natural videos</title>
+		<title>Text detection and recognition on youtube videos</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" type="text/css">
 		<link rel="stylesheet" href="/static/css/app.css" type="text/css">
@@ -11,24 +11,42 @@
 		<script src="https://cdn.staticfile.org/twitter-bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
 		<script src="https://unpkg.com/vue"></script>
 	</head>
+    <style>
+        h5 { color: #111; font-family: 'Helvetica Neue', sans-serif; font-size: 40px; font-weight: bold; letter-spacing: -1px; line-height: 1; text-align: center; }
+        h3 { color: #111; font-family: 'Helvetica Neue', sans-serif; font-size: 25px; font-weight: bold; letter-spacing: -1px; line-height: 1; text-align: center; }
+        
+        input {
+            border: 2px;
+            border-radius: 4px;
+        }
+        #upload-form {
+            background-color: #EFF2FB;
+            color: black;    
+        }
+    </style>
 	<body>
-		<div id="app">
+        <h5>Text detection and recognition on youtube videos</h5> <br />
+		<div id="form" >
 			<div>
 				<form id="upload-form" method="post" enctype="multipart/form-data">
-					<h5>Demo - Text detection and recognition on natural videos</h5>
 					<div class="form-content-container">
-						<input id="submit_url" type="url" name="url" />
-                        <input id="start" type="text" name="start" />
-                        <input id="seconds" type="number" name="seconds" min="01" max="59" />
+                 
+						Youtube url<br />
+                        <input id="submit_url" type="url" name="url" /><br />
+                        Start time <br />              
+                        <input id="start" type="text" name="start" /> Example: 01:30, for 1 minute 30 seconds <br />
+                        Seconds <br />                     
+                        <input id="seconds" type="number" name="seconds" min="01" max="59" /> Example: 20, for 20 seconds<br /><br /><br />
 
 						<input id="submit_button" type="submit" value="Find text" />
 					</div>
 				</form>
 			</div>
+        Note: This demo restricts the size of the video to 1 minute. Don't worry if your video is longer, use the fields start and duration to trim it on the fly!
 			<hr>
+             <h3>Result</h3> <br />
 			<div id="result">
 				<div class="item">
-					<div>Result</div>
 					<ul>
 						<li>
                             <video width="1280" height="960" controls>

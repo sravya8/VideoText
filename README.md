@@ -49,7 +49,7 @@ We leverage Convolutional Recurrent Network for recognition purposes.
 
 ## Inference
 
-recognition.py holds helper functions for recognition task. Loads Convolutional Recurrent Network weights file and runs inference. It is adapted from [caffe implementation](https://github.com/bgshih/crnn) from original authors Shi etal and pytorch implementation by @meijieru model. See crnn.pytorch folder for more details. Please see the original implementation for training instructions.
+recognition.py holds helper functions for recognition task. Loads Convolutional Recurrent Network weights file and runs inference. It is adapted from [caffe implementation](https://github.com/bgshih/crnn) from original authors Shi etal and pytorch implementation by [@meijieru](https://github.com/meijieru/crnn.pytorch) model. See crnn.pytorch folder for more details. Please see the original implementation for training instructions.
  
 # Web server
 We have a basic web server serving video analysis requests. To start, execute following in this directory:

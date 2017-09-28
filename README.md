@@ -60,7 +60,9 @@ recognition.py holds helper functions for recognition task. Loads Convolutional 
  
 # Web server
 We have a basic web server serving video analysis requests. To start, execute following in this directory:
+
 $ export FLASK_APP=flask_server.py
+
 $ flask run (use --host=0.0.0.0 to run it on public ip, to access from a remote machine)
 
 - flask_server.py - Contains basic flask app

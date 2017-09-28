@@ -1,31 +1,61 @@
 # Video Text Detection and Recognition
 
-This software implements an end to end pipeline to detect and recognize text from youtube videos. The text detection is based on 
+This is an implementation of an end to end pipeline to detect and recognize text from youtube videos. The text detection is based on 
 [SSD: Single Shot MultiBox Detector](https://arxiv.org/pdf/1512.02325.pdf) retrained on single text class using [Coco-Text](https://vision.cornell.edu/se3/coco-text-2/) dataset and text recognition is based on Convolutional Recurrent Neural Network as described in [An End-to-End Trainable Neural Network for Image-based Sequence Recognition and Its Application to Scene Text Recognition](https://arxiv.org/pdf/1507.05717.pdf) 
 
 ![Demo](static/tennis.gif "Demo")
 
 Please see Demo notebook as a starting point. Use it to provide your youtube url to either:
-1. Generate a new video with overlayed bounding boxes for all text and their respective transcriptions.
-2. Get text detection/recognition results in JSON format
+1. Get text detection/recognition results in JSON format (or)
+2. Generate a new video with overlayed bounding boxes for all text and their respective transcriptions.
 
 Directory structure:
 - Demo.ipynb: Demo notebook as described above
-- videotext.py: Main functionality for this project
-- detection.py and detection: detection.py holds helper functions for detection task. Loads Tensorflow inference graph trained seperately using Tensorflow objection detection models on text data. We use ssd_mobile network as it is the fastest among available models. See README.md in detection folder for more details.
-- recognition.py and crnn.pytorch: recognition.py holds helper functions for recognition task. Loads pytorch model and infers. See crnn.pytorch folder for more details. It contains Pytorch implementation of CRNN for text recognition on cropped natural images.
+- videotext.py: Main entry point which connects various pieces of the pipeline. 
+- detection.py and detection: detection.py abstracts detection functionality. See [detection](#Detection) section for more details.
+- recognition.py and crnn.pytorch: recognition.py abstracts recognition functionality. See [recognition](#Recognition) section for more details
 - utilities.py: Holds all other helper functions required for E2E video text detection and recognition.
 
+Coco-text:
 - coco-text: Helper functions to work with Coco-Text data. Also contains Coco-Text Preparation notebook to translate coco-text to TFRecord to use with Tensorflow detection model.
 - Eval_Coco_text_val_set.ipynb: Contains code to evaluate our model on coco-text benchmark
 
+SynthText:
 - synth_utils.py: Helper script to prepare SynthText data
 - SynthText Data Preparation notebook[In progress]: Scripts to translate Synthetext data to TFrecord to be used with Tensorflow detection model
 
-Web server:
+# Detection
+Our detection model is based on [Tensorflow's object detection models](https://github.com/tensorflow/models/tree/master/research/object_detection) and the [detection model zoo](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md)
+
+We transfer learn on Mobile SSD network. The original network was trained on coco dataset (natural objects) for detection task. We retrain the network for text detection (single class) using Coco-Text dataset. 
+
+## Inference
+
+detection.py loads frozen Tensorflow inference graph and runs inference for our data.
+
+## Training
+Please follow instructions provided by [Tensorflow's object detection](https://github.com/tensorflow/models/tree/master/research/object_detection) along with scripts and configs provided in detection/ folder. We have also experimented with faster-RCNN pretrained on Coco, for which we provide the config file as well.
+1. ssd_mobilenet_v1_coco.config
+2. faster_rcnn_resnet101_pets_coco.config
+
+Script used to generate TF records for use with this model is at [coco-text/Coco-Text%20to%20TFRecords.ipynb](../coco-text/Coco-Text%20to%20TFRecords.ipynb)
+
+# Recognition
+
+We leverage Convolutional Recurrent Network for recognition purposes. 
+
+## Inference
+
+recognition.py holds helper functions for recognition task. Loads Convolutional Recurrent Network weights file and runs inference. It is adapted from [caffe implementation](https://github.com/bgshih/crnn) from original authors Shi etal and pytorch implementation by @meijieru model. See crnn.pytorch folder for more details. Please see the original implementation for training instructions.
+ 
+# Web server
+We have a basic web server serving video analysis requests. To start, execute following in this directory:
+$ export FLASK_APP=flask_server.py
+$ flask run (use --host=0.0.0.0 to run it on public ip, to access from a remote machine)
+
 - flask_server.py - Contains basic flask app
 - templates - Contains html for flask app
 - static - Holds demo videos
 
-Pre-trained weights:
-Download from [Google drive](https://drive.google.com/drive/folders/0B2zzsNPEVylSYmUwTnYweXpkZ00?usp=sharing) and put it into a folder named weights/
+# Assets
+Download weights from [Google drive](https://drive.google.com/drive/folders/0B2zzsNPEVylSYmUwTnYweXpkZ00?usp=sharing) and put it into a folder named weights/

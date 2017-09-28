@@ -81,7 +81,7 @@ def build_video(input_files, output_file):
 @timefunc
 def visualize(image_path, boxes, texts, out_path=None):
     image = Image.open(image_path)
-    #plt.clf()
+    plt.clf()
     plt.imshow(image)
 
     if boxes is not None:

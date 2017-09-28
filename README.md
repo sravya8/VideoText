@@ -1,9 +1,10 @@
 # Video Text Detection and Recognition
 ![Demo](static/tennis.gif "Demo")
 
-[Work in progress]
+This is an end to end pipiline to detect and recognize text from natural videos. The text detection is based on 
+[SSD: Single Shot MultiBox Detector](https://arxiv.org/pdf/1512.02325.pdf) retrained on single text class using [Coco-Text](https://vision.cornell.edu/se3/coco-text-2/) dataset and text recognition is based on CRNN network as described in [An End-to-End Trainable Neural Network for Image-based Sequence Recognition and Its Application to Scene Text Recognition](https://arxiv.org/pdf/1507.05717.pdf) 
 
-Please see Demo notebook as a starting point. Use it to provide your youtube url to:
+Please see Demo notebook as a starting point. Use it to provide your youtube url to either:
 1. Generate a new video with overlayed bounding boxes for all text and their respective transcriptions.
 2. Get text detection/recognition results in JSON format
 

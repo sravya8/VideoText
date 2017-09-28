@@ -5,7 +5,7 @@ This is an implementation of an end to end pipeline to detect and recognize text
 
 ![Demo](static/tennis.gif =250x)
 
-<img src="static/tennis.gif" height="400" width="800" />
+<img src="static/tennis.gif" height="450" width="800" />
 
 Please see Demo notebook as a starting point. Use it to provide your youtube url to either:
 1. Get text detection/recognition results in JSON format (or)

@@ -15,8 +15,8 @@ All requirements are captured in the requirements.txt. Please switch to your vir
 # Directory structure:
 - Demo.ipynb: Demo notebook as described above
 - videotext.py: Main entry point which connects various pieces of the pipeline. 
-- detection.py and detection: detection.py abstracts detection functionality. See [detection](#Detection) section for more details.
-- recognition.py and crnn.pytorch: recognition.py abstracts recognition functionality. See [recognition](#Recognition) section for more details
+- detection.py and detection: detection.py abstracts detection functionality. See [detection](#detection) section for more details.
+- recognition.py and crnn.pytorch: recognition.py abstracts recognition functionality. See [recognition](#recognition) section for more details
 - utilities.py: Holds all other helper functions required for E2E video text detection and recognition.
 
 Coco-text:

@@ -37,11 +37,18 @@ We transfer learn on Mobile SSD network. The original network was trained on coc
 detection.py loads frozen Tensorflow inference graph and runs inference for our data.
 
 ## Training
-Please follow instructions provided by [Tensorflow's object detection](https://github.com/tensorflow/models/tree/master/research/object_detection) along with scripts and configs provided in detection/ folder. We have also experimented with faster-RCNN pretrained on Coco, for which we provide the config file as well.
+Please follow instructions provided by [Tensorflow's object detection](https://github.com/tensorflow/models/tree/master/research/object_detection) along with scripts and configs provided in detection/ folder.
+
+### Model configs
+We have also experimented with faster-RCNN pretrained on Coco, for which we provide the config file as well.
 1. ssd_mobilenet_v1_coco.config
 2. faster_rcnn_resnet101_pets_coco.config
 
-Script used to generate TF records for use with this model is at [coco-text/Coco-Text%20to%20TFRecords.ipynb](../coco-text/Coco-Text%20to%20TFRecords.ipynb)
+### Class definition
+See [text.pbtxt](detection/text.pbtxt)
+
+### Generate TFRecords
+Script used to generate TF records for use with this model is at [coco-text/Coco-Text%20to%20TFRecords.ipynb](coco-text/Coco-Text%20to%20TFRecords.ipynb)
 
 # Recognition
 

@@ -9,7 +9,10 @@ Please see Demo notebook as a starting point. Use it to provide your youtube url
 1. Get text detection/recognition results in JSON format (or)
 2. Generate a new video with overlayed bounding boxes for all text and their respective transcriptions.
 
-Directory structure:
+# Requirements
+All requirements are captured in the requirements.txt. Please switch to your virtual environment based on your preferences and install them (pip install -r requirements.txt)
+
+# Directory structure:
 - Demo.ipynb: Demo notebook as described above
 - videotext.py: Main entry point which connects various pieces of the pipeline. 
 - detection.py and detection: detection.py abstracts detection functionality. See [detection](#Detection) section for more details.

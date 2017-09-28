@@ -3,7 +3,7 @@
 This is an implementation of an end to end pipeline to detect and recognize text from youtube videos. The text detection is based on 
 [SSD: Single Shot MultiBox Detector](https://arxiv.org/pdf/1512.02325.pdf) retrained on single text class using [Coco-Text](https://vision.cornell.edu/se3/coco-text-2/) dataset and text recognition is based on Convolutional Recurrent Neural Network as described in [An End-to-End Trainable Neural Network for Image-based Sequence Recognition and Its Application to Scene Text Recognition](https://arxiv.org/pdf/1507.05717.pdf) 
 
-![Demo](static/tennis.gif "Demo" =320x180)
+![Demo](static/tennis.gif =250x)
 
 Please see Demo notebook as a starting point. Use it to provide your youtube url to either:
 1. Get text detection/recognition results in JSON format (or)

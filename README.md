@@ -1,4 +1,5 @@
 # Video Text Detection and Recognition
+![Demo](static/tennis.gif "Demo")
 
 [Work in progress]
 

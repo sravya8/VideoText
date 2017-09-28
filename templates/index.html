@@ -36,9 +36,9 @@
                         Start time <br />              
                         <input id="start" type="text" name="start" /> Example: 01:30, for 1 minute 30 seconds <br />
                         Seconds <br />                     
-                        <input id="seconds" type="number" name="seconds" min="01" max="59" /> Example: 20, for 20 seconds<br /><br /><br />
+                        <input id="seconds" type="number" name="seconds" min="01" max="59" /> Example: 20, for 20 seconds<br /><br />
 
-						<input id="submit_button" type="submit" value="Find text" />
+						<input id="submit_button" type="submit" value="Find text" /> <br />
 					</div>
 				</form>
 			</div>
@@ -46,21 +46,15 @@
 			<hr>
              <h3>Result</h3> <br />
 			<div id="result">
-				<div class="item">
-					<ul>
-						<li>
-                            <video width="1280" height="960" controls>
-                                <source src='{{ video_path }}' type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-						</li>
-					</ul>
-				</div>
+                <video width="1280" height="960" controls>
+                    <source src='{{ video_path }}' type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
 			</div>
 			<hr>
 			<footer>
-				<div>This is a demo from Sravya
-				<div>Github repo for this demo: <a href="https://github.com/sravya8/..">https://github.com/sravya8/..</a></div>
+				<div>By Sravya Tirukkovalur
+				<div>Github repo for this demo: <a href="https://github.com/sravya8/VideoText">https://github.com/sravya8/VideoText</a></div>
 			</footer>
 			<!--a href="https://github.com/argman/EAST"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a-->
 		</div>

@@ -5,6 +5,8 @@ This is an implementation of an end to end pipeline to detect and recognize text
 
 <img src="static/tennis.gif" height="450" width="800" />
 
+[Slide deck](https://goo.gl/kmoTnm)
+
 Please see Demo notebook as a starting point. Use it to provide your youtube url to either:
 1. Get text detection/recognition results in JSON format (or)
 2. Generate a new video with overlayed bounding boxes for all text and their respective transcriptions.

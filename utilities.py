@@ -74,7 +74,7 @@ def get_frames(video_path, output_frames_path, temp_dir, from_time, duration):
 def build_video(input_files, output_file):
     ff = ffmpy.FFmpeg(
         inputs={input_files: None},
-        outputs={output_file: '-pix_fmt yuv420p'})
+        outputs={output_file: '-vb 20M'})
     ff.run()
     return output_file
 
@@ -91,7 +91,7 @@ def visualize(image_path, boxes, texts, out_path=None):
             x = xmin, xmax, xmax, xmin, xmin
             y = ymin, ymin, ymax, ymax, ymin
             plt.plot(x, y, 'g', alpha=0.8)
-            plt.text(xmin, ymin, texts[index].strip(), color='b', fontsize=15)#bbox={'facecolor':'white', 'alpha':0.5, 'pad':0})
+            plt.text(xmin, ymin-10, texts[index].strip(), color='r', fontsize=15, bbox={'facecolor':'white', 'alpha':0.5, 'pad':0})
     if out_path is not None:
         plt.savefig(out_path)
         #plt.close(fig)

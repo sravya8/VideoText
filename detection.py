@@ -7,7 +7,7 @@ from PIL import Image
 # Path to frozen detection graph. This is the model retrained on text data
 PATH_TO_CKPT = './weights/frozen_inference_graph.pb'
 
-DEFAULT_SCORE_THRESHOLD=0.9
+DEFAULT_SCORE_THRESHOLD=0.8
 
 def timefunc(f):
     def f_timer(*args, **kwargs):

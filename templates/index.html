@@ -10,6 +10,8 @@
 		<script src="https://cdn.staticfile.org/tether/1.4.0/js/tether.min.js"></script>
 		<script src="https://cdn.staticfile.org/twitter-bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
 		<script src="https://unpkg.com/vue"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+
          <script>// <![CDATA[
             function updateTextInput(val) {
               document.getElementById('seconds').value=val; 
@@ -38,13 +40,40 @@
     </style>
 	<body>
         <h5>Text detection and recognition on youtube videos</h5> <br />
-		
-        <!--iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?list=PLIWDQcgr4TrRWtgWyMSrhNuzGnrMpOOEm" frameborder="0" allowfullscreen></iframe-->
-        <iframe width="1280" height="960" src="https://www.youtube.com/embed/AZ_irxxBMgo?start=10" frameborder="0" allowfullscreen></iframe>
-        <iframe width="1280" height="960" src="https://www.youtube.com/embed/VXTiucLRlao" frameborder="0" allowfullscreen></iframe>
-        <iframe width="1280" height="960" src="https://www.youtube.com/embed/dc-_DdGaZec" frameborder="0" allowfullscreen></iframe>        
-           
-   
+		<div id="form" >
+            <form id="upload-form" method="post" enctype="multipart/form-data">
+                <div class="form-content-container">
+
+                    Youtube url<br />
+                    <input id="submit_url" type="url" name="url" /><br />
+                        Start time <br />              
+                    Minutes:<input id="start" type="number" name="start_min" /> 
+                    Seconds:<input id="start" type="number" name="start_sec" />
+                    <br/>
+                    
+                    Duration in seconds <br />                     
+                    <input id="seconds" type="number" name="seconds" min="01" max="59" />
+                    <br />
+
+                    <input id="submit_button" type="submit" value="Find text" onclick="$('#loading').show();" /> <br />
+                                                                                       
+                </div>
+            </form>
+            Note: This demo restricts the size of the video to 1 minute. Don't worry if your video is longer, use the fields start and duration to trim it on the fly!
+		</div>                              
+        <div id="loading" style="display:none;" align="middle" >
+            <img src="static/loading.gif" alt="" style="width:300px;height:300px;" />
+        </div>
+
+        <div id="content">            
+            <h3>{{ result_string}}</h3> <br />
+
+             <video width="1280" height="960" controls>
+                    <source src='{{ video_path }}' type="video/mp4">
+                    Your browser does not support the video tag.
+             </video>
+        </div>
+			
         <footer>
 				<div>By Sravya Tirukkovalur
 				<div>Github repo for this demo: <a href="https://github.com/sravya8/VideoText">https://github.com/sravya8/VideoText</a></div>

@@ -12,9 +12,11 @@ from PIL import Image
 from tqdm import tqdm
 import glob
 
-import detection, recognition
 sys.path.append('coco-text')
 import coco_text
+
+sys.path.append('..')
+from VideoText import detection, recognition
 
 COCO_DATA='/home/sravya/data/muse/coco/coco2014/'
 COCO_WORDS_TEST='/home/sravya/data/muse/coco/cocotextwords/test/'

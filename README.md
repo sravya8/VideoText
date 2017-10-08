@@ -20,14 +20,7 @@ All requirements are captured in the requirements.txt. Please switch to your vir
 - detection.py and detection: detection.py abstracts detection functionality. See [detection](#detection) section for more details.
 - recognition.py and crnn.pytorch: recognition.py abstracts recognition functionality. See [recognition](#recognition) section for more details
 - utilities.py: Holds all other helper functions required for E2E video text detection and recognition.
-
-Coco-text:
-- coco-text: Helper functions to work with Coco-Text data. Also contains Coco-Text Preparation notebook to translate coco-text to TFRecord to use with Tensorflow detection model.
-- Eval_Coco_text_val_set.ipynb: Contains code to evaluate our model on coco-text benchmark
-
-SynthText:
-- synth_utils.py: Helper script to prepare SynthText data
-- SynthText Data Preparation notebook[In progress]: Scripts to translate Synthetext data to TFrecord to be used with Tensorflow detection model
+- data_explore_eval: Contains utilities specific to various datasets and evaluation scripts. Also contains scripts to generate submissions for ICDAR17 - Robust reading competition on Coco-text
 
 # Detection
 Our detection model is based on [Tensorflow's object detection models](https://github.com/tensorflow/models/tree/master/research/object_detection) and the [detection model zoo](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md)
@@ -70,6 +63,19 @@ $ flask run (use --host=0.0.0.0 to run it on public ip, to access from a remote 
 - flask_server.py - Contains basic flask app
 - templates - Contains html for flask app
 - static - Holds demo videos
+
+# Data Explore and evaluation 
+See data_explore_eval directory
+
+Coco-text:
+- coco-text: Helper functions to work with Coco-Text data. Also contains Coco-Text Preparation notebook to translate coco-text to TFRecord to use with Tensorflow detection model.
+- Eval_Coco_text_val_set.ipynb: Contains code to evaluate our model on coco-text benchmark
+
+SynthText:
+- synth_utils.py: Helper script to prepare SynthText data
+- SynthText Data Preparation notebook[In progress]: Scripts to translate Synthetext data to TFrecord to be used with Tensorflow detection model
+
+Also contains script to generate submissions for ICDAR17 and run evaluations offline
 
 # Assets
 Download weights from [Google drive](https://drive.google.com/drive/folders/0B2zzsNPEVylSYmUwTnYweXpkZ00?usp=sharing) and put it into a folder named weights/

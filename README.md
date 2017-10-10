@@ -76,5 +76,10 @@ SynthText:
 
 Also contains script to generate submissions for ICDAR17 and run evaluations offline
 
+# Unit Tests
+Unit testing for video functionality is added. More tests need to be added.
+To run them:
+$ python -m pytest test_utilities.py
+
 # Assets
 Download weights from [Google drive](https://drive.google.com/drive/folders/0B2zzsNPEVylSYmUwTnYweXpkZ00?usp=sharing) and put it into a folder named weights/

@@ -79,6 +79,7 @@ Also contains script to generate submissions for ICDAR17 and run evaluations off
 # Unit Tests
 Unit testing for video functionality is added. More tests need to be added.
 To run them:
+
 $ python -m pytest test_utilities.py
 
 # Assets
